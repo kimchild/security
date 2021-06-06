@@ -26,45 +26,38 @@ public class EncryptTest {
 		final String plainText = "암호화 텍스트";
 
 		EncryptNormal encryptNormal = new EncryptNormal();
-		encryptNormal.setPlainText(plainText);
-		encryptNormal.encrypt();
-		encryptNormal.encode();
-
-		final String encryptText = encryptNormal.getEncryptText();
+		final String encryptText = encryptNormal.getEncryptText(plainText);
 		System.out.println("value : " + encryptText);
 
-		encryptNormal.setEncryptText(encryptText);
-		encryptNormal.decode();
-		System.out.println("value : " + encryptNormal.getDecryptText());
+		System.out.println("value : " + encryptNormal.getDecryptText(encryptText));
 		System.out.println(plainText);
-		assertThat(plainText).isEqualTo(encryptNormal.getDecryptText());
+		assertThat(plainText).isEqualTo(encryptNormal.getDecryptText(encryptText));
 	}
 
 	@Test
 	public void 복호화예외처리테스트() {
 
 		final String plainText = "암호화 텍스트";
+		String decryptText = null;
 
-		EncryptNormal encryptNormal = new EncryptNormal();
-		encryptNormal.setPlainText(plainText);
+		EncryptNormal encryptNormal;
 
-
-		// encode
 		try {
-			encryptNormal.encrypt();
-			encryptNormal.encode();
-
-			final String encryptText = encryptNormal.getEncryptText();
+			// encode
+			encryptNormal = new EncryptNormal();
+			final String encryptText = encryptNormal.getEncryptText(plainText);
+			System.out.println("value : " + encryptText);
 
 			// decode
-			encryptNormal.setEncryptText(encryptText);
-			encryptNormal.decode();
+			decryptText = encryptNormal.getDecryptText(encryptText);
+			System.out.println("value : " + encryptNormal.getDecryptText(encryptText));
+			System.out.println(plainText);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 
-		System.out.println("value : " + encryptNormal.getDecryptText());
+		System.out.println("value : " + decryptText);
 		System.out.println(plainText);
-		assertThat(plainText).isEqualTo(encryptNormal.getDecryptText());
+		assertThat(plainText).isEqualTo(decryptText);
 	}
 }
