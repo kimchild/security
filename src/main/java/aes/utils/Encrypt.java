@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public abstract class Encrypt {
+public class Encrypt {
 	public static final String PLEASE_CALL_TO_ENCRYPT_METHOD = "Please call to encrypt method";
 
 	Cipher cipher;
@@ -31,6 +31,12 @@ public abstract class Encrypt {
 		this.padding = padding;
 	}
 
+	private void valid() throws InvalidKeyException {
+		if (null == this.cipher || null == secretKeySpec || null == ivParameterSpec) {
+			throw new InvalidKeyException(PLEASE_CALL_TO_ENCRYPT_METHOD);
+		}
+	}
+
 	public String getEncryptText() {
 		return encryptText;
 	}
@@ -45,12 +51,6 @@ public abstract class Encrypt {
 
 	public void setEncryptText(String encryptText) {
 		this.encryptText = encryptText;
-	}
-
-	private void valid() throws InvalidKeyException {
-		if (null == this.cipher || null == secretKeySpec || null == ivParameterSpec) {
-			throw new InvalidKeyException(PLEASE_CALL_TO_ENCRYPT_METHOD);
-		}
 	}
 
 	public void encrypt(final String aesSecretKey) throws
